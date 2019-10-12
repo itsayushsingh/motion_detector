@@ -25,7 +25,7 @@ while True:
     (cnts,_) = cv2.findContours(thresh_frame.copy(),cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
 
     for contour in cnts:
-        if cv2.contourArea(contour) < 1000:
+        if cv2.contourArea(contour) < 100:
             continue
         status=1
 
@@ -33,6 +33,10 @@ while True:
         cv2.rectangle(frame, (x, y),(x+w, y+h), (0,255,0), 3)
 
     status_list.append(status)
+
+    #only last 2 status printed on the list
+    status_list=status_list[-2:]
+
     if status_list[-1]==1 and status_list[-2]==0:
         times.append(datetime.now())
     if status_list[-1]==0 and status_list[-2]==1:
@@ -59,4 +63,4 @@ for i in range(0,len(times),2):
 df.to_csv("Times.csv")
 
 video.release()
-cv2.destroyAllWindows()
+cv2.destroyAllWindows
